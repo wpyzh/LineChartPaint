@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.wp.linechartpaint.LineChartView
+    <com.wp.linechartpaint.LineChartViewNoXy
         android:id="@+id/chartView"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
