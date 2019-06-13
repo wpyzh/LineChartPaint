@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IBreathDayLineChart">
+        <attr name="chart_title" format="string"/>
+        <attr name="chart_normal_range" format="string"/>
+        <attr name="chart_aisx_y" format="string"/>
+    </declare-styleable>
+</resources>

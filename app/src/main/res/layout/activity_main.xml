@@ -6,20 +6,48 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.wp.linechartpaint.LineChartViewNoXy
-        android:id="@+id/chartView"
-        android:layout_marginTop="50dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent">
 
-    <com.wp.linechartpaint.SleepDataReportView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="40dp"/>
-    
-    <com.wp.linechartpaint.ProgressView
-        android:id="@+id/pv"
-        android:layout_marginTop="30dp"
-        android:layout_width="100dp"
-        android:layout_height="30dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.wp.linechartpaint.LineChartViewNoXy
+                android:id="@+id/chartView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="50dp" />
+
+            <com.wp.linechartpaint.SleepDataReportView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="40dp" />
+
+            <!--<com.wp.linechartpaint.ProgressView
+                android:id="@+id/pv"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="30dp" />-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#21b4be"/>
+
+            <com.wp.linechartpaint.IBreathDayLineChart
+                android:id="@+id/breath_chart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#21b4be"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
