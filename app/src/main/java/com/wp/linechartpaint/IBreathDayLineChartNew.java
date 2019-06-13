@@ -229,20 +229,20 @@ public class IBreathDayLineChartNew extends View {
                 point.warnValue = mSleepChartModels.get(i).getValue();
                 points.add(point);
 
-//                //如果两个数据点的间隔大于等于15分钟，则两个点不直接连接，垂直到X轴
-//                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
-//                    MyPoint pointX1 = new MyPoint();
-//                    pointX1.x = point.x;
-//                    pointX1.y = mTopY + mChartHeight;
-//                    pointX1.warnValue = 0;
-//                    points.add(pointX1);
-//
-//                    MyPoint pointX2 = new MyPoint();
-//                    pointX2.x = mLeftX + AxisUtils.getMinute(mStartTime, xAisxValue[i + 1]) * mChartWidth / mTimeRange;
-//                    pointX2.y = mTopY + mChartHeight;
-//                    pointX2.warnValue = 0;
-//                    points.add(pointX2);
-//                }
+                //如果两个数据点的间隔大于等于15分钟，则两个点不直接连接，垂直到X轴
+                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
+                    MyPoint pointX1 = new MyPoint();
+                    pointX1.x = point.x;
+                    pointX1.y = mTopY + mChartHeight;
+                    pointX1.warnValue = 0;
+                    points.add(pointX1);
+
+                    MyPoint pointX2 = new MyPoint();
+                    pointX2.x = mLeftX + xtemp / 2 + AxisUtils.getMinute(mStartTime, xAisxValue[i + 1]) * (mChartWidth - xtemp) / mTimeRange;
+                    pointX2.y = mTopY + mChartHeight;
+                    pointX2.warnValue = 0;
+                    points.add(pointX2);
+                }
             }
         }
         return points;

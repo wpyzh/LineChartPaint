@@ -213,26 +213,26 @@ public class IBreathDayLineChart extends View {
         if (allTime != 0) {
             for (int i = 0; i < xAisxValue.length; i++) {
                 MyPoint point = new MyPoint();
-                point.x = (int) (mLeftX + xTemp / 2 + AxisUtils.getMinute(startTime, xAisxValue[i]) * (mChartWidth-xTemp) / allTime);
+                point.x = mLeftX + xTemp / 2 + AxisUtils.getMinute(startTime, xAisxValue[i]) * (mChartWidth - xTemp) / allTime;
                 int y = mTopY + (Integer.parseInt(yAisx[0]) - Integer.parseInt(yAisxValue[i])) * mChartHeight / totalValueY;
                 point.y = y < mTopY ? mTopY : y;
                 point.warnValue = Integer.parseInt(yAisxValue[i]);
                 points.add(point);
 
-//                //如果两个数据点的间隔大于等于15分钟，则两个点不直接连接，垂直到X轴
-//                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
-//                    MyPoint pointX1 = new MyPoint();
-//                    pointX1.x = point.x;
-//                    pointX1.y = mTopY + mChartHeight;
-//                    pointX1.warnValue = 0;
-//                    points.add(pointX1);
-//
-//                    MyPoint pointX2 = new MyPoint();
-//                    pointX2.x = mLeftX + AxisUtils.getMinute(startTime, xAisxValue[i + 1]) * mChartWidth / allTime;
-//                    pointX2.y = mTopY + mChartHeight;
-//                    pointX2.warnValue = 0;
-//                    points.add(pointX2);
-//                }
+                //如果两个数据点的间隔大于等于15分钟，则两个点不直接连接，垂直到X轴
+                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
+                    MyPoint pointX1 = new MyPoint();
+                    pointX1.x = point.x;
+                    pointX1.y = mTopY + mChartHeight;
+                    pointX1.warnValue = 0;
+                    points.add(pointX1);
+
+                    MyPoint pointX2 = new MyPoint();
+                    pointX2.x = mLeftX + xTemp / 2 + AxisUtils.getMinute(startTime, xAisxValue[i + 1]) * (mChartWidth - xTemp) / allTime;
+                    pointX2.y = mTopY + mChartHeight;
+                    pointX2.warnValue = 0;
+                    points.add(pointX2);
+                }
             }
         }
         return points;
@@ -266,20 +266,15 @@ public class IBreathDayLineChart extends View {
     }
 
     private void drawBroken(ArrayList<MyPoint> myPointArrayList, Canvas canvas) {
-//        MyPoint startpoint = myPointArrayList.get(0);
-//        Path path = new Path();
-//        path.moveTo(startpoint.x, startpoint.y);
         for (int i = 0; i < myPointArrayList.size() - 1; i++) {
-//            path.lineTo(nextp.x, nextp.y);
             canvas.drawLine(myPointArrayList.get(i).x, myPointArrayList.get(i).y, myPointArrayList.get(i + 1).x, myPointArrayList.get(i + 1).y, mLineChartPaint);
         }
-//        canvas.drawPath(path, mLineChartPaint);
     }
 
     public class MyPoint {
-        public int x;
-        public int y;
-        public int warnValue;
+        private float x;
+        private float y;
+        private int warnValue;
 
         @Override
         public String toString() {
