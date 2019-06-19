@@ -201,7 +201,11 @@ public class IBreathDayLineChartNew extends View {
         }
         //画折线
         for (int i = 0; i < points.size() - 1; i++) {
-            canvas.drawLine(points.get(i).x, points.get(i).y, points.get(i + 1).x, points.get(i + 1).y, mLineChartPaint);
+            if (points.get(i).warnValue == 0 || points.get(i+1).warnValue == 0 || (points.get(i + 1).x - points.get(i).x) >= range15Minute){
+
+            }else {
+                canvas.drawLine(points.get(i).x, points.get(i).y, points.get(i + 1).x, points.get(i + 1).y, mLineChartPaint);
+            }
         }
         //画最大值点
         canvas.drawCircle(maxPoint.x, maxPoint.y, dip2px(mContext, 6), mShadePointPaint);
@@ -230,19 +234,19 @@ public class IBreathDayLineChartNew extends View {
                 points.add(point);
 
                 //如果两个数据点的间隔大于等于15分钟，则两个点不直接连接，垂直到X轴
-                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
-                    MyPoint pointX1 = new MyPoint();
-                    pointX1.x = point.x;
-                    pointX1.y = mTopY + mChartHeight;
-                    pointX1.warnValue = 0;
-                    points.add(pointX1);
-
-                    MyPoint pointX2 = new MyPoint();
-                    pointX2.x = mLeftX + xtemp / 2 + AxisUtils.getMinute(mStartTime, xAisxValue[i + 1]) * (mChartWidth - xtemp) / mTimeRange;
-                    pointX2.y = mTopY + mChartHeight;
-                    pointX2.warnValue = 0;
-                    points.add(pointX2);
-                }
+//                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
+//                    MyPoint pointX1 = new MyPoint();
+//                    pointX1.x = point.x;
+//                    pointX1.y = mTopY + mChartHeight;
+//                    pointX1.warnValue = 0;
+//                    points.add(pointX1);
+//
+//                    MyPoint pointX2 = new MyPoint();
+//                    pointX2.x = mLeftX + xtemp / 2 + AxisUtils.getMinute(mStartTime, xAisxValue[i + 1]) * (mChartWidth - xtemp) / mTimeRange;
+//                    pointX2.y = mTopY + mChartHeight;
+//                    pointX2.warnValue = 0;
+//                    points.add(pointX2);
+//                }
             }
         }
         return points;

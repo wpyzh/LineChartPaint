@@ -220,19 +220,19 @@ public class IBreathDayLineChart extends View {
                 points.add(point);
 
                 //如果两个数据点的间隔大于等于15分钟，则两个点不直接连接，垂直到X轴
-                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
-                    MyPoint pointX1 = new MyPoint();
-                    pointX1.x = point.x;
-                    pointX1.y = mTopY + mChartHeight;
-                    pointX1.warnValue = 0;
-                    points.add(pointX1);
-
-                    MyPoint pointX2 = new MyPoint();
-                    pointX2.x = mLeftX + xTemp / 2 + AxisUtils.getMinute(startTime, xAisxValue[i + 1]) * (mChartWidth - xTemp) / allTime;
-                    pointX2.y = mTopY + mChartHeight;
-                    pointX2.warnValue = 0;
-                    points.add(pointX2);
-                }
+//                if (i + 1 < xAisxValue.length && AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
+//                    MyPoint pointX1 = new MyPoint();
+//                    pointX1.x = point.x;
+//                    pointX1.y = mTopY + mChartHeight;
+//                    pointX1.warnValue = 0;
+//                    points.add(pointX1);
+//
+//                    MyPoint pointX2 = new MyPoint();
+//                    pointX2.x = mLeftX + xTemp / 2 + AxisUtils.getMinute(startTime, xAisxValue[i + 1]) * (mChartWidth - xTemp) / allTime;
+//                    pointX2.y = mTopY + mChartHeight;
+//                    pointX2.warnValue = 0;
+//                    points.add(pointX2);
+//                }
             }
         }
         return points;
@@ -267,7 +267,11 @@ public class IBreathDayLineChart extends View {
 
     private void drawBroken(ArrayList<MyPoint> myPointArrayList, Canvas canvas) {
         for (int i = 0; i < myPointArrayList.size() - 1; i++) {
-            canvas.drawLine(myPointArrayList.get(i).x, myPointArrayList.get(i).y, myPointArrayList.get(i + 1).x, myPointArrayList.get(i + 1).y, mLineChartPaint);
+            if (myPointArrayList.get(i).warnValue == 0 || myPointArrayList.get(i+1).warnValue == 0 || AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15){
+
+            }else {
+                canvas.drawLine(myPointArrayList.get(i).x, myPointArrayList.get(i).y, myPointArrayList.get(i + 1).x, myPointArrayList.get(i + 1).y, mLineChartPaint);
+            }
         }
     }
 
