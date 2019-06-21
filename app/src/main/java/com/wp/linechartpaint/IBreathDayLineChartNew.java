@@ -63,6 +63,9 @@ public class IBreathDayLineChartNew extends View {
     private int mTitleTextSize;//标题字体大小
     private int mMiniOrMaxTextSize;//最大最小值字体大小
     private int yEqualSpacing;//y轴等间距
+    private float xTemp;//x轴平均间距
+    private int maxWarValue = -1;
+    private int minWarValue = -1;
 
     public IBreathDayLineChartNew(Context context) {
         this(context, null);
@@ -156,7 +159,7 @@ public class IBreathDayLineChartNew extends View {
         mChartWidth = getWidth() - mLeftX - mRightX;
         mChartHeight = yEqualSpacing * (yAisx.length - 1);
         float yTemp = yEqualSpacing;
-        float xTemp = mChartWidth * 1.0f / (xAisx.length);
+        xTemp = mChartWidth * 1.0f / (xAisx.length);
         //画Y轴横线和Y轴文本
         for (int i = 0; i < yAisx.length; i++) {
             canvas.drawLine(mLeftX, mTopY + yTemp * i, mLeftX + mChartWidth, mTopY + yTemp * i, mLineXPaint);
@@ -199,6 +202,8 @@ public class IBreathDayLineChartNew extends View {
                 minPoint = points.get(i);
             }
         }
+        maxWarValue = maxPoint.warnValue;
+        minWarValue = minPoint.warnValue;
         //画折线
         for (int i = 0; i < points.size() - 1; i++) {
             if (points.get(i).warnValue == 0 || points.get(i+1).warnValue == 0 || (points.get(i + 1).x - points.get(i).x) >= range15Minute){
@@ -272,6 +277,46 @@ public class IBreathDayLineChartNew extends View {
             this.yAisx = yAisx;
         }
         invalidate();
+    }
+
+    /**
+     * 获取最大值
+     * @return
+     */
+    public int getMaxWarValue(){
+        /*if (mSleepChartModels.size() == 0){
+            return -1;
+        }
+        ArrayList<MyPoint> points = value2Point(xTemp);
+        MyPoint maxPoint = points.get(0);//最大值点
+        for (int i = 1; i < points.size(); i++) {
+            //获取最大值点
+            if (points.get(i).warnValue != -1 && points.get(i).warnValue > maxPoint.warnValue) {
+                maxPoint = points.get(i);
+            }
+        }
+        return maxPoint.warnValue;*/
+        return maxWarValue;
+    }
+
+    /**
+     * 获取最小值
+     * @return
+     */
+    public int getMinWarValue(){
+        /*if (mSleepChartModels.size() == 0){
+            return -1;
+        }
+        ArrayList<MyPoint> points = value2Point(xTemp);
+        MyPoint minPoint = points.get(0);//最小值点
+        for (int i = 1; i < points.size(); i++) {
+            //获取最小值点
+            if (points.get(i).warnValue != -1 && points.get(i).warnValue < minPoint.warnValue) {
+                minPoint = points.get(i);
+            }
+        }
+        return minPoint.warnValue;*/
+        return minWarValue;
     }
 
     public class MyPoint {

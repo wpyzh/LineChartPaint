@@ -57,6 +57,9 @@ public class IBreathDayLineChart extends View {
     private int mTitleTextSize;//标题字体大小
     private int mMiniOrMaxTextSize;//最大最小值字体大小
     private int yEqualSpacing;//y轴等间距
+    private float xTemp;
+    private int maxWarValue = -1;
+    private int minWarValue = -1;
 
     public IBreathDayLineChart(Context context) {
         this(context, null);
@@ -151,7 +154,7 @@ public class IBreathDayLineChart extends View {
 //        mChartHeight = yEqualSpacing * (yAisx.length - 1);
         mChartHeight = getHeight() - mTopY - mBottomY;
         float yTemp = yEqualSpacing;
-        float xTemp = mChartWidth * 1.0f / (xAisx.length);
+        xTemp = mChartWidth * 1.0f / (xAisx.length);
         //画Y轴横线和Y轴文本
         for (int i = 0; i < yAisx.length; i++) {
             canvas.drawLine(mLeftX, mTopY + yTemp * i, mLeftX + mChartWidth, mTopY + yTemp * i, mLineXPaint);
@@ -177,7 +180,7 @@ public class IBreathDayLineChart extends View {
             if (points.size() > 0) {
                 MyPoint maxPoint = points.get(0);
                 MyPoint minPoint = points.get(0);
-                for (int i = 0; i < points.size(); i++) {
+                for (int i = 1; i < points.size(); i++) {
                     if (points.get(i).warnValue > 0) {
                         if (points.get(i).warnValue > maxPoint.warnValue) {
                             maxPoint = points.get(i);
@@ -187,6 +190,8 @@ public class IBreathDayLineChart extends View {
                         }
                     }
                 }
+                maxWarValue = maxPoint.warnValue;
+                minWarValue = minPoint.warnValue;
                 drawBroken(points, canvas);
                 //画最大值点
                 canvas.drawCircle(maxPoint.x, maxPoint.y, dip2px(mContext, 6), mShadePointPaint);
@@ -263,6 +268,46 @@ public class IBreathDayLineChart extends View {
             this.endTime = endTime;
         }
         invalidate();
+    }
+
+    /**
+     * 获取最大值
+     * @return
+     */
+    public int getMaxWarValue(){
+        /*ArrayList<MyPoint> points = values2Point(xAisx, yAisx, xAisxValue, yAisxValue, startTime, endTime, xTemp);
+        if (points.size() == 0){
+            return -1;
+        }
+        MyPoint maxPoint = points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            if (points.get(i).warnValue > 0) {
+                if (points.get(i).warnValue > maxPoint.warnValue) {
+                    maxPoint = points.get(i);
+                }
+            }
+        }*/
+        return maxWarValue;
+    }
+
+    /**
+     * 获取最小值
+     * @return
+     */
+    public int getMinWarValue(){
+        /*ArrayList<MyPoint> points = values2Point(xAisx, yAisx, xAisxValue, yAisxValue, startTime, endTime, xTemp);
+        if (points.size() == 0){
+            return -1;
+        }
+        MyPoint minPoint = points.get(0);
+        for (int i = 1; i < points.size(); i++) {
+            if (points.get(i).warnValue > 0) {
+                if (points.get(i).warnValue < minPoint.warnValue || minPoint.warnValue == 0) {
+                    minPoint = points.get(i);
+                }
+            }
+        }*/
+        return minWarValue;
     }
 
     private void drawBroken(ArrayList<MyPoint> myPointArrayList, Canvas canvas) {
