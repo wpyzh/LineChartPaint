@@ -60,18 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
         int minute = DateTimeUtil.getMinuteDiff(startTime, endTime);
         if (minute < maxPiont) {
-            return new String[]{startTime, endTime};
-        } else {
-            int perMinute = minute / maxPiont + (minute % maxPiont == 0 ? 0 : 1);
-            String[] xAixs = new String[maxPiont + 1];
-            xAixs[0] = startTime;
-            long startMillis = TimeUtil.parseMillis(startTime, "yyyy-MM-dd HH:mm:ss");
-
-            for (int i = 1; i <= maxPiont; ++i) {
-                long nextMillis = TimeUtil.modMinute(startMillis, i * perMinute);
-                xAixs[i] = TimeUtil.format(nextMillis, "yyyy-MM-dd HH:mm:ss");
-            }
-            return xAixs;
+            minute = maxPiont;
         }
+
+        int perMinute = minute / maxPiont + (minute % maxPiont == 0 ? 0 : 1);
+        String[] xAixs = new String[maxPiont + 1];
+        xAixs[0] = startTime;
+        long startMillis = TimeUtil.parseMillis(startTime, "yyyy-MM-dd HH:mm:ss");
+
+        for (int i = 1; i <= maxPiont; ++i) {
+            long nextMillis = TimeUtil.modMinute(startMillis, i * perMinute);
+            xAixs[i] = TimeUtil.format(nextMillis, "yyyy-MM-dd HH:mm:ss");
+        }
+        return xAixs;
+
     }
 }
