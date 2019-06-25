@@ -166,7 +166,9 @@ public class IBreathDayLineChart extends View {
         }
         //画X轴文本
         for (int i = 0; i < xAisx.length; i++) {
-            canvas.drawText(xAisx[i].substring(11, 16), xTemp * i + mLeftX + xTemp / 2 / 3, mTopY + mChartHeight + dip2px(mContext, 20), mXTextPaint);
+            float txtWidth = mXTextPaint.measureText(xAisx[i].substring(11, 16));
+            canvas.drawText(xAisx[i].substring(11, 16), xTemp * i + mLeftX + xTemp / 2 - txtWidth / 2, mTopY + mChartHeight + dip2px(mContext, 20), mXTextPaint);
+
         }
         //画X轴轴标,用完隐藏
         for (int i = 0; i < xAisx.length; i++) {
@@ -272,9 +274,10 @@ public class IBreathDayLineChart extends View {
 
     /**
      * 获取最大值
+     *
      * @return
      */
-    public int getMaxWarValue(){
+    public int getMaxWarValue() {
         /*ArrayList<MyPoint> points = values2Point(xAisx, yAisx, xAisxValue, yAisxValue, startTime, endTime, xTemp);
         if (points.size() == 0){
             return -1;
@@ -292,9 +295,10 @@ public class IBreathDayLineChart extends View {
 
     /**
      * 获取最小值
+     *
      * @return
      */
-    public int getMinWarValue(){
+    public int getMinWarValue() {
         /*ArrayList<MyPoint> points = values2Point(xAisx, yAisx, xAisxValue, yAisxValue, startTime, endTime, xTemp);
         if (points.size() == 0){
             return -1;
@@ -312,9 +316,9 @@ public class IBreathDayLineChart extends View {
 
     private void drawBroken(ArrayList<MyPoint> myPointArrayList, Canvas canvas) {
         for (int i = 0; i < myPointArrayList.size() - 1; i++) {
-            if (myPointArrayList.get(i).warnValue == 0 || myPointArrayList.get(i+1).warnValue == 0 || AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15){
+            if (myPointArrayList.get(i).warnValue == 0 || myPointArrayList.get(i + 1).warnValue == 0 || AxisUtils.getMinute(xAisxValue[i], xAisxValue[i + 1]) >= 15) {
 
-            }else {
+            } else {
                 canvas.drawLine(myPointArrayList.get(i).x, myPointArrayList.get(i).y, myPointArrayList.get(i + 1).x, myPointArrayList.get(i + 1).y, mLineChartPaint);
             }
         }

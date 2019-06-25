@@ -171,7 +171,8 @@ public class IBreathDayLineChartNew extends View {
         }
         //画X轴文本
         for (int i = 0; i < xAisx.length; i++) {
-            canvas.drawText(xAisx[i].substring(11, 16), xTemp * i + mLeftX + xTemp / 2 / 3, mTopY + mChartHeight + dip2px(mContext, 20), mXTextPaint);
+            float txtWidth = mXTextPaint.measureText(xAisx[i].substring(11, 16));
+            canvas.drawText(xAisx[i].substring(11, 16), xTemp * i + mLeftX + xTemp / 2 - txtWidth / 2, mTopY + mChartHeight + dip2px(mContext, 20), mXTextPaint);
         }
         //画X轴轴标,用完隐藏
         for (int i = 0; i < xAisx.length; i++) {
@@ -206,9 +207,9 @@ public class IBreathDayLineChartNew extends View {
         minWarValue = minPoint.warnValue;
         //画折线
         for (int i = 0; i < points.size() - 1; i++) {
-            if (points.get(i).warnValue == 0 || points.get(i+1).warnValue == 0 || (points.get(i + 1).x - points.get(i).x) >= range15Minute){
+            if (points.get(i).warnValue == 0 || points.get(i + 1).warnValue == 0 || (points.get(i + 1).x - points.get(i).x) >= range15Minute) {
 
-            }else {
+            } else {
                 canvas.drawLine(points.get(i).x, points.get(i).y, points.get(i + 1).x, points.get(i + 1).y, mLineChartPaint);
             }
         }
@@ -281,9 +282,10 @@ public class IBreathDayLineChartNew extends View {
 
     /**
      * 获取最大值
+     *
      * @return
      */
-    public int getMaxWarValue(){
+    public int getMaxWarValue() {
         /*if (mSleepChartModels.size() == 0){
             return -1;
         }
@@ -301,9 +303,10 @@ public class IBreathDayLineChartNew extends View {
 
     /**
      * 获取最小值
+     *
      * @return
      */
-    public int getMinWarValue(){
+    public int getMinWarValue() {
         /*if (mSleepChartModels.size() == 0){
             return -1;
         }
